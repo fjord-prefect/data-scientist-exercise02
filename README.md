@@ -3,9 +3,9 @@ I was able to perform some exploratory data analysis and I hope you are able to 
 
 Incidents per year have decreased steadily since 1982.  It is unknown whether this is due to improvement in safety measures or some sort of anomaly in record taking.  Overall injuries and fatalities follow this trend as well with roughly 1 in 10 incidents containing a fatality.
 
-An assumption was made on the missing values in the AirCarrier field. The assumption being that the missing values in this field represented aircraft that didn't belong to any major AirCarrier and are therefore less likely to be a large commercial flight.  If this assumption holds then fatalities occur in roughly 7% of major AirCarrier incidents.  This is in contrast to the fatalities that occur in 20% of the non-major AirCarrier flights.
+An assumption was made on the missing values in the AirCarrier field. The assumption being that the missing values in this field represented aircraft that didn't belong to any major AirCarrier and therefore are less likely to be a large commercial plane.  If this assumption holds then fatalities occur in roughly 7% of major AirCarrier incidents.  This is in contrast to the fatalities that occur in 20% of the non-major AirCarrier flights.
 
-That said I think it is safe to assume that when fatalities do occur in large carrier planes the number of fatalities per incident are much larger.  For example below is a scatter plot of the Latitudes and Longitudes of incidents containing fatalities.  Size and color both represent the sum of fatalities down weighted by population of the city in which the incident occurred.
+That said when fatalities do occur in large carrier planes the number of fatalities per incident are much larger.  For example below is a scatter plot of the Latitudes and Longitudes of incidents containing fatalities.  Size and color both represent the sum of fatalities down weighted by population of the city in which the incident occurred.
 ![Figure1](imgs/map.png "LatLong Plot")
 Notice large circles in popular travel destinations like the Carribean and Hawaii.  But look North of NY and you will see a few larger dots one of which represents a crash that occurred in Gander Canada and took the lives of 248 people.
 
