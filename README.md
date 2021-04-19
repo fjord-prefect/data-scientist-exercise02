@@ -1,52 +1,18 @@
 ## RTI CDS Analytics Exercise 02
+I was able to perform some exploratory data analysis and I hope you are able to find it useful.  The over theme of the findings are two fold.  Firstly there is evidence that show small craft incidents involving a fatality occur at a substantially higher rate than large craft.  Secondly the aspects that influence the probability of a fatality occurring differ between large and small craft.  For the purposes of this EDA I define large craft as what people would typically fly commercially on e.g. JetBlue.  Small craft are defined as everything else from DIY planes to Helicopters.
 
-Welcome to Exercise 02. This exercise provides data from the [National Transportation Safety Board](http://www.ntsb.gov/Pages/default.aspx)'s [database of aviation accidents](http://www.ntsb.gov/_layouts/ntsb.aviation/index.aspx). We'll ask you to perform some routine high-level analytic tasks with the data. 
+Incidents per year have decreased steadily since 1982.  It's unknown whether this is due to the improvement in safety measures or some sort of anomaly in record taking.  Overall injuries and fatalities follow this trend as well with roughly 1 in 10 incidents containing a fatality.
 
-----
+An assumption was made on the missing values in the AirCarrier field and that was that the missing values represented aircraft that didn't belong to an major AirCarrier.  If this assumption holds then fatalities occur in roughly 7% of major Air Carrier incidents.  This is in contrast to the fatalities that occur in 20% of the non major Air Carrier flights.
 
-### Some guidance
+That said I think it is safe to assume that when fatalities do occur in large carrier planes the number of fatalities per incident are much larger.  For example below is a scatter plot of the Latitudes and Longitudes of incidents containing fatalities.  Size and color both represent the sum of fatalities down weighted by population of the city.
+![Figure1](imgs/map.png "LatLong Plot")
+Notice large circles in popular travel destinations like the Carribean and Hawaii.  But look North of NY and you will see a few larger dots one of which represents a crash that occurred in Gander Canada and took the lives of 248 people.
 
-1. Use open source tools, such as Python, R, or Java. Do not use proprietary tools, such as SAS, SPSS, JMP, Tableau, or Stata. 
-2. Fork this repository to your personal GitHub account and clone the fork to your computer.
-3. Save and commit your answers to your fork of the repository, and push them back to your personal GitHub account. You can then provide a link to that fork of the repository if you need to show a code example.
-4. Use the Internet as a resource to help you complete your work. We do it all the time.
-5. Comment your code so that when you look back at it in a year, you'll remember what you were doing.
-6. There are many ways to approach and solve the problems presented in this exercise.
-7. Have fun!
+In order to determine some of the reasons flight incidents were more fatal than others I trained a model to predict a binary response of Fatal Incidents and Nonfatal Incidents. I was not interested in using this model to make predictions but rather to gather the feature importance information using Shapley Values.
+![Figure2](imgs/FeatureImportance.png "Shapley Value Feature Importance")
+Above are the feature importances of the model. And while it may take a data scientist to interpret these the main takeaways are this:  Features at the top are most important and the more separated the dots are from the center the stronger the weight that feature will have on the model output.  Notice the colors tend to group together and this is because the color red represents a high value for that feature.  Take a look at the first feature BroadPhaseOfFlight_Landing.  This means, you guessed it, the incident occured during landing.  From this table we are able to gather that being in the landing phase when the incident occurs is our strongest indication for there being NO Fatalities.  If this surprises you and you want to see a deeper analysis into shapley values see the jupyter notebook EDA.ipynb.  While this held true for most planes the relationship was inverted for blimps, helicopters and gliders.  DIY built planes were also a feature that had a strong push toward the incident involving fatalities.
 
-----
+Finally, analysis of the narrative and probable_cause fields were informative.  Probable causes of fatal incidents included examples like suicide, colliding with mountains, ground or water.  For non-fatal incidents collisions occurred with unknown objects, deer, animals, powerlines, and a horse.  Collisions with birds occurred both in fatal and non-fatal incidents.
 
-### The Data
-
-There are 145 files in this repository:
-
-- `AviationData.xml`: This is a straight export of the database provided by the NTSB. The data has not been altered. It was retrieved by clicking "Download All (XML)" from [this page on the NTSB site.](http://www.ntsb.gov/_layouts/ntsb.aviation/index.aspx)
-
-There are 144 files in the following format:
-
-- `NarrativeData_xxx.json`: These files were created by taking the `EventId`s from `AviationData.xml` and collecting two additional pieces of data for each event: 
-  - `narrative`: This is the written narrative of an incident.
-  - `probable_cause`: If the full narrative includes a "probable cause" statement, it is in this field. 
-
-----
-
-### The Task
-
-**Explore the data and prepare a 1/2 to 1 page written overview of your findings.**
-
-_Additional Context:_
-
-* Assume the audience for your write-up is a non-technical stakeholder. 
-* Assume the audience for your code is a colleague who may need to read or modify it in the future. 
-
-#### Possible approaches
-
-This data is ripe for exploration. Working with the files provided, here are a few structured tasks that you can attempt. Note: these are suggested data exploration tasks. Feel free to complete none, some, or all of these steps as you explore the data.
-
-1. Determine what fields you have available for each incident record.
-2. Prepare descriptive statistics that convey an overview of the data.
-3. If/Where you feel it is appropriate, visualize the data to help build a narrative around the descriptive statistics.
-4. Perform initial exploratory analysis of the narrative text. What, if anything, can you learn from analyzing the text that you cannot learn from the structured data fields?
-5. After removing common stopwords, what are the most frequent terms in the narrative text? Do the word frequencies change over time?
-6. Use topic modeling to cluster the incidents based on the narrative text and/or probable cause descriptions. How do the clusters differ from those created with the structured data fields?
-7. Imagine you have a client with a fear of flying. That client wants to know what types of flights present the most risk of an incident. Use your findings from the earlier tasks to answer the client's question in a report no longer than 1 page.
+To address peoples' fear of flying.  Fatal incidents rarely occurred during landing in typical planes, which tends to be the most frightening part of flying.  The opposite is true for balloon aircrafts and DIY aircraft. Turns out most gyrocrafts are built by amateurs.  Incidents that occur while taxiing are generally nonfatal although not exclusively.  For incidents that occurred while taxiing important terms extracted included fire, fueling issues, and collision with vehicles on the runway.
