@@ -20,7 +20,7 @@ Finally, analysis of the narrative and probable_cause fields were informative.  
 To address peoples' fear of flying.  Fatal incidents rarely occurred during landing in typical planes, which tends to be the most frightening part of flying.  The opposite is true for balloon aircrafts and DIY aircraft. Turns out most gyrocrafts are built by amateurs.  Incidents that occur while taxiing are generally non-fatal although not exclusively.  For incidents that occurred while taxiing important terms extracted included fire, fueling issues, and collision with vehicles on the runway.
 
 
-# Appendix and More Confusing Figures
+# Appendix
 
 ## Be Careful Landing Your Balloon!
 ![Figure3](imgs/BalloonLanding.png "The danges of landing a balloon")
